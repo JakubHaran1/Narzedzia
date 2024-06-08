@@ -19,6 +19,4 @@ jobs:
           path: dist/converter.exe # Ścieżka do wygenerowanego pliku .exe
     
       - name: Install dependencies
-          run: |
-            powershell -ExecutionPolicy Bypass -File ./installResources.ps1
-          
+        run: powershell -ExecutionPolicy Bypass -File ./installResources.ps1
