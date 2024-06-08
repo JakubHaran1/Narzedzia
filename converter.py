@@ -1,7 +1,7 @@
 import sys
 import json
 import yaml
-
+import xmltodict
 if len(sys.argv) != 3:
     print("Błędnie podane argumenty - converter.py file1.x file2.y")
     sys.exit(0)
@@ -44,6 +44,21 @@ class Converter:
             except yaml.YAMLError:
                 print("Niepoprawny format pliku.")
                 sys.exit(0)
+        elif ext1 == "xml":
+            try:
+                data = {}
+                with open(file1,"r") as file:
+                    data = file.read()
+                    data = xmltodict.parse(data)
+                return data
+            except FileNotFoundError:
+                print("Taki plik nie istnieje")
+                sys.exit(0)
+            except UnicodeError:
+                print("Niepoprawny format danych")
+                sys.exit(0)
+        
+
     
     def save_data(self,file2,ext2,data):
         new_file = f"{file2}.{ext2}"
