@@ -37,17 +37,28 @@ class Converter:
                 with open(file1,"r") as file:
                     data = yaml.safe_load(file)
                 return data
+            except FileNotFoundError:
+                print("Taki plik nie istnieje")
+                sys.exit(0)
+
             except yaml.YAMLError:
                 print("Niepoprawny format pliku.")
+                sys.exit(0)
     
     def save_data(self,file2,ext2,data):
         new_file = f"{file2}.{ext2}"
-        if ext2 == "json":
-            try:
+        try:
+            if ext2 == "json":
+          
                 with open(new_file,"w") as file:
                     json.dump(data,file)
-            except ValueError:
-                print("Niepoprawny format danych do zamisu w json")
+            
+            elif ext2 == "yml":
+                with open(new_file,"w") as file:
+                    yaml.dump(data, file)
+            
+        except ValueError:
+            print(f"Niepoprawny format danych do zapisu w {ext2}")
 
 
 
