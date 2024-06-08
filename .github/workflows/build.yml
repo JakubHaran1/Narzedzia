@@ -1,5 +1,22 @@
-converter
-- name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install pyinstaller pyyaml xmltodict
+name: Build and Upload EXE
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: "0 0 * * 0" # Uruchomienie raz w tygodniu, w niedzielę o północy
+  workflow_dispatch: # Uruchomienie ręcznie przez użytkownika
+
+jobs:
+  build:
+    runs-on: windows-latest # Ustawienie domyślnego serwera Windows
+    steps:
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: converter
+          path: dist/converter.exe # Ścieżka do wygenerowanego pliku .exe
+    
+      - name: Install dependencies
+        run: powershell -ExecutionPolicy Bypass -File ./installResources.ps1
