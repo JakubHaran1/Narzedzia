@@ -30,7 +30,7 @@ class Converter:
                 sys.exit(0)
                 
             except json.JSONDecodeError:
-                print("Niepoprawny format pliku.")
+                print("Niepoprawny format danych.")
                 sys.exit(0)
         elif ext1 == "yml":
             try:
@@ -42,7 +42,7 @@ class Converter:
                 sys.exit(0)
 
             except yaml.YAMLError:
-                print("Niepoprawny format pliku.")
+                print("Niepoprawny format danych.")
                 sys.exit(0)
         elif ext1 == "xml":
             try:
@@ -57,6 +57,11 @@ class Converter:
             except UnicodeError:
                 print("Niepoprawny format danych")
                 sys.exit(0)
+        else:
+             print("Niepoprawny format danych")
+             sys.exit(0)
+
+
         
 
     
@@ -64,13 +69,16 @@ class Converter:
         new_file = f"{file2}.{ext2}"
         try:
             if ext2 == "json":
-          
                 with open(new_file,"w") as file:
                     json.dump(data,file)
             
             elif ext2 == "yml":
                 with open(new_file,"w") as file:
                     yaml.dump(data, file)
+            elif ext2 == "xml":
+                data =  xml_data = xmltodict.unparse({'root': data})
+                with open(new_file,"w") as file:
+                    file.write(data)                     
             
         except ValueError:
             print(f"Niepoprawny format danych do zapisu w {ext2}")
