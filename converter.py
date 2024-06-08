@@ -67,22 +67,21 @@ class Converter:
     
     def save_data(self,file2,ext2,data):
         new_file = f"{file2}.{ext2}"
-        # try:
-        if ext2 == "json":
-    
-            with open(new_file,"w") as file:
-                json.dump(data,file)
-        
-        elif ext2 == "yml":
-            with open(new_file,"w") as file:
-                yaml.dump(data, file)
-        elif ext2 == "xml":
-            data =  xml_data = xmltodict.unparse({'root': data})
-            with open(new_file,"w") as file:
-                file.write(data)                     
+        try:
+            if ext2 == "json":
+                with open(new_file,"w") as file:
+                    json.dump(data,file)
             
-        # except ValueError:
-            # print(f"Niepoprawny format danych do zapisu w {ext2}")
+            elif ext2 == "yml":
+                with open(new_file,"w") as file:
+                    yaml.dump(data, file)
+            elif ext2 == "xml":
+                data =  xml_data = xmltodict.unparse({'root': data})
+                with open(new_file,"w") as file:
+                    file.write(data)                     
+            
+        except ValueError:
+            print(f"Niepoprawny format danych do zapisu w {ext2}")
 
 
 
