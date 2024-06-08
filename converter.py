@@ -1,5 +1,6 @@
 import sys
 import json
+import yaml
 
 if len(sys.argv) != 3:
     print("Błędnie podane argumenty - converter.py file1.x file2.y")
@@ -31,6 +32,13 @@ class Converter:
             except json.JSONDecodeError:
                 print("Niepoprawny format pliku.")
                 sys.exit(0)
+        elif ext1 == "yml":
+            try:
+                with open(file1,"r") as file:
+                    data = yaml.safe_load(file)
+                return data
+            except yaml.YAMLError:
+                print("Niepoprawny format pliku.")
     
     def save_data(self,file2,ext2,data):
         new_file = f"{file2}.{ext2}"
